@@ -20,10 +20,10 @@ $maped_languages = array();
 	<?php endif; ?>
 </div>
 
-<div id="jcmst_available_translations_wrapper" class="misc-pub-section misc-pub-post-status <?php if(empty($translations['chain'])) echo ' hide-if-js'; ?>">
+<div id="jcml_available_translations_wrapper" class="misc-pub-section misc-pub-post-status <?php if(empty($translations['chain'])) echo ' hide-if-js'; ?>">
 	<label>Available translations:</label><br/>
 	<div>
-		<table width="100%"><tbody id="jcmst_available_translations">
+		<table width="100%"><tbody id="jcml_available_translations">
 		<?php if(!empty($translations['chain'])) 
 			foreach($translations['chain'] as $trans) : 
 				$maped_languages[$trans->blog_id] = $trans->post_id;
@@ -31,7 +31,7 @@ $maped_languages = array();
 			<tr>
 				<td class="language"><strong><?php echo esc_html($trans->alias); ?></strong></td>
 				<td><a href="<?php echo $trans->post->guid; ?>" target="_blank"><?php echo esc_html($trans->post->post_title); ?></a> 
-					<a href="#" class="jcmst-delete-translation" data-translation_id="<?php echo $trans->translation_id; ?>">delete</a>
+					<a href="#" class="jcml-delete-translation" data-translation_id="<?php echo $trans->translation_id; ?>">delete</a>
 				</td>
 			</tr>
 		<?php endforeach; ?>
@@ -39,44 +39,44 @@ $maped_languages = array();
 	</div>
 </div>
 
-<div class="jcmst-translate-actions">
-	<div class="jcmst-left-btn">
-		<input type="button" class="button" value="Set relation" data-target="#jcmst_set_relation_wrap">
+<div class="jcml-translate-actions">
+	<div class="jcml-left-btn">
+		<input type="button" class="button" value="Set relation" data-target="#jcml_set_relation_wrap">
 	</div>
 	<?php if($post->post_status != 'auto-draft') : ?>
 		<div>
-			<input type="button" class="button" value="Translate" data-target="#jcmst_translate_wrap">
+			<input type="button" class="button" value="Translate" data-target="#jcml_translate_wrap">
 		</div>
 	<?php endif; ?>
 	<div class="clear"></div>
 </div>
 
-<div id="jcmst_set_relation_wrap" class="hide-if-js">
+<div id="jcml_set_relation_wrap" class="hide-if-js">
 	<div class="wp-tab-panel">
 		<p>Please choose language and correct post.</p>
-		<select id="jcmst_set_rel_language" class="full-width" name="jcmst_translate_of[blog_id]">
+		<select id="jcml_set_rel_language" class="full-width" name="jcml_translate_of[blog_id]">
 			<option value="">Select language...</option>
-			<?php echo jcmst_html_options($language_options, $translate_of['blog_id']); ?>
+			<?php echo jcml_html_options($language_options, $translate_of['blog_id']); ?>
 		</select>
-		<input type="text" id="jcmst_set_rel_post_search" placeholder="Start typing post title..." 
-			   name="jcmst_translate_of[post_id]"
-			   value="<?php echo esc_attr($translate_of['post_id']); ?>" class="jcmst-hidden full-width"
+		<input type="text" id="jcml_set_rel_post_search" placeholder="Start typing post title..." 
+			   name="jcml_translate_of[post_id]"
+			   value="<?php echo esc_attr($translate_of['post_id']); ?>" class="jcml-hidden full-width"
 			   data-post_type="<?php echo esc_attr($post->post_type); ?>"
 			   />
-		<input type="hidden" id="jcmst_set_rel_post_id" value="" />
+		<input type="hidden" id="jcml_set_rel_post_id" value="" />
 		
 		<p>or specify post full URL</p>
-		<input type="text" id="jcmst_set_rel_post_url" placeholder="Copy post URL here..." 
+		<input type="text" id="jcml_set_rel_post_url" placeholder="Copy post URL here..." 
 			   value="" class="full-width"
 			   data-post_type="<?php echo esc_attr($post->post_type); ?>"
 			   />
-		<input type="button" class="button" id="jcmst_save_rel_btn" value="Save">
-		<input type="button" class="button" id="jcmst_cancel_rel_btn" value="Cancel" data-target="#jcmst_set_relation_wrap">
+		<input type="button" class="button" id="jcml_save_rel_btn" value="Save">
+		<input type="button" class="button" id="jcml_cancel_rel_btn" value="Cancel" data-target="#jcml_set_relation_wrap">
 		<br><br>
 	</div>
 </div>
 
-<div id="jcmst_translate_wrap" class="hide-if-js">
+<div id="jcml_translate_wrap" class="hide-if-js">
 	<div class="wp-tab-panel">
 		
 		<p>Please choose language you want to add.<br/>
@@ -96,7 +96,7 @@ $maped_languages = array();
 			<p style="color:#d00;">...It seems you already have all translations.</p>
 		<?php endif; ?>
 
-		<input type="button" class="button" id="jcmst_cancel_trnsl_btn" value="Cancel" data-target="#jcmst_translate_wrap">
+		<input type="button" class="button" id="jcml_cancel_trnsl_btn" value="Cancel" data-target="#jcml_translate_wrap">
 	</div>
 </div>
 

@@ -1,16 +1,16 @@
 jQuery(document).ready(function(){
 	
 	// add click event to buttons to open hidden boxes 
-	jQuery(document).on('click', 'div.jcmst-translate-actions input, #jcmst_cancel_rel_btn, #jcmst_cancel_trnsl_btn', function(){
+	jQuery(document).on('click', 'div.jcml-translate-actions input, #jcml_cancel_rel_btn, #jcml_cancel_trnsl_btn', function(){
 		var $this = jQuery(this);
 		var wrapper_id = $this.data('target');
 		jQuery(wrapper_id).toggleClass('hide-if-js').find('span.error').remove();
 	})
 	
 	// choose language events
-	jQuery(document).on('change', '#jcmst_set_rel_language', function(){
+	jQuery(document).on('change', '#jcml_set_rel_language', function(){
 		var $this = jQuery(this);
-		var search_input = jQuery('#jcmst_set_rel_post_search');
+		var search_input = jQuery('#jcml_set_rel_post_search');
 		if( $this.val() == '' ){
 			search_input
 					.hide()
@@ -24,7 +24,7 @@ jQuery(document).ready(function(){
 					.autocomplete({
 						source: function( request, response ) {
 							var data = {
-								action: 'jcmst_post_search_by_title',
+								action: 'jcml_post_search_by_title',
 								term: request.term,
 								post_type: search_input.data('post_type'),
 								blog_id: $this.val()
@@ -33,7 +33,7 @@ jQuery(document).ready(function(){
 						},
 						select: function(event, ui){
 							jQuery(event.target).val(ui.item.label);
-							jQuery('#jcmst_set_rel_post_id').val(ui.item.value);
+							jQuery('#jcml_set_rel_post_id').val(ui.item.value);
 							ui.item.value = ui.item.label;
 						}
 					});
@@ -41,13 +41,13 @@ jQuery(document).ready(function(){
 	})
 	
 	// validate post url function
-	var jcmst_check_post_url = function(e){
+	var jcml_check_post_url = function(e){
 		var $this = jQuery(this);
 		jQuery.ajax({
 			url: ajaxurl,
 			type: 'POST',
 			data: {
-				action: 'jcmst_post_search_by_url',
+				action: 'jcml_post_search_by_url',
 				term: $this.val(),
 				post_type: $this.data('post_type'),
 			},
@@ -67,23 +67,23 @@ jQuery(document).ready(function(){
 			}
 		})
 	}
-	jQuery(document).on('keyup', '#jcmst_set_rel_post_url', jcmst_check_post_url);
-	jQuery(document).on('change', '#jcmst_set_rel_post_url', jcmst_check_post_url);
-	jQuery(document).on('blur', '#jcmst_set_rel_post_url', jcmst_check_post_url);
+	jQuery(document).on('keyup', '#jcml_set_rel_post_url', jcml_check_post_url);
+	jQuery(document).on('change', '#jcml_set_rel_post_url', jcml_check_post_url);
+	jQuery(document).on('blur', '#jcml_set_rel_post_url', jcml_check_post_url);
 	
 	// save btn click
-	jQuery(document).on('click', '#jcmst_save_rel_btn', function(){
+	jQuery(document).on('click', '#jcml_save_rel_btn', function(){
 		var $this = jQuery(this);
 		jQuery.ajax({
 			url: ajaxurl,
 			type: 'POST',
 			data: {
-				action: 'jcmst_post_map_language',
+				action: 'jcml_post_map_language',
 				id: jQuery('#post_ID').val(), // origin post ID
-				blog_id: jQuery('#jcmst_set_rel_language').val(),
-				post_id: jQuery('#jcmst_set_rel_post_id').val(), // found
-				post_url: jQuery('#jcmst_set_rel_post_url').val(),
-				post_type: jQuery('#jcmst_set_rel_post_url').data('post_type')
+				blog_id: jQuery('#jcml_set_rel_language').val(),
+				post_id: jQuery('#jcml_set_rel_post_id').val(), // found
+				post_url: jQuery('#jcml_set_rel_post_url').val(),
+				post_type: jQuery('#jcml_set_rel_post_url').data('post_type')
 			},
 			success: function(response){
 				$this.parent().find('span.error').remove();
@@ -93,20 +93,20 @@ jQuery(document).ready(function(){
 					$this.prev().after('<span class="error">' + response.errors + '</span>');
 				}
 				else if(response.status == 'ok'){
-					jcmst_render_available_translations(response.translations);
+					jcml_render_available_translations(response.translations);
 					
-					jQuery('#jcmst_set_rel_language').val('');
-					jQuery('#jcmst_set_rel_post_search').val('').hide();
-					jQuery('#jcmst_set_rel_post_id').val('');
-					jQuery('#jcmst_set_rel_post_url').val('');
-					jQuery('#jcmst_set_relation_wrap').addClass('hide-if-js');
+					jQuery('#jcml_set_rel_language').val('');
+					jQuery('#jcml_set_rel_post_search').val('').hide();
+					jQuery('#jcml_set_rel_post_id').val('');
+					jQuery('#jcml_set_rel_post_url').val('');
+					jQuery('#jcml_set_relation_wrap').addClass('hide-if-js');
 				}
 			}
 		})
 	});
 	
 	// delete translation btn click
-	jQuery(document).on('click', '#jcmst_available_translations a.jcmst-delete-translation', function(e){
+	jQuery(document).on('click', '#jcml_available_translations a.jcmst-delete-translation', function(e){
 		e.preventDefault();
 		
 		var $this = jQuery(this);
@@ -117,7 +117,7 @@ jQuery(document).ready(function(){
 				url: ajaxurl,
 				type: 'POST',
 				data: {
-					action: 'jcmst_post_detach_language',
+					action: 'jcml_post_detach_language',
 					id: jQuery('#post_ID').val(), // origin post ID
 					translation_id: $this.data('translation_id')
 				},
@@ -127,7 +127,7 @@ jQuery(document).ready(function(){
 					if( typeof(response) != 'object' ) return;
 
 					if(response.status == 'ok'){
-						jcmst_render_available_translations(response.translations);
+						jcml_render_available_translations(response.translations);
 					}
 				}
 			})
@@ -136,7 +136,7 @@ jQuery(document).ready(function(){
 	
 });
 
-function jcmst_render_available_translations( translation_info ){
+function jcml_render_available_translations( translation_info ){
 	var chain = translation_info.chain;
 	
 	var content = '';
@@ -144,22 +144,22 @@ function jcmst_render_available_translations( translation_info ){
 		var trans = chain[i];
 		var lang = trans.alias;
 		content += '<tr><td class="language"><strong>' + lang + '</strong></td><td>';
-		content += '<a href="'+trans.post.giud+'" target="_blank">' + jcmst_escapeHtmlEntities(trans.post.post_title) + '</a>';
+		content += '<a href="'+trans.post.giud+'" target="_blank">' + jcml_escapeHtmlEntities(trans.post.post_title) + '</a>';
 		content += ' <a href="#" class="jcmst-delete-translation" data-translation_id="' + trans.translation_id + '">delete</a>';
 		content += '</td></tr>';
 	}
 	
-	jQuery('#jcmst_available_translations').html( content );
+	jQuery('#jcml_available_translations').html( content );
 	
 	if( chain.length ){
-		jQuery('#jcmst_available_translations_wrapper').show();
+		jQuery('#jcml_available_translations_wrapper').show();
 	}
 	else{
-		jQuery('#jcmst_available_translations_wrapper').hide();
+		jQuery('#jcml_available_translations_wrapper').hide();
 	}
 }
 
-function jcmst_escapeHtmlEntities (str) {
+function jcml_escapeHtmlEntities (str) {
   if (typeof jQuery !== 'undefined') {
     // Create an empty div to use as a container,
     // then put the raw text in and get the HTML

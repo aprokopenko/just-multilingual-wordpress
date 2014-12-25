@@ -1,0 +1,46 @@
+.jcml-translate-actions{
+    padding: 10px 10px 0;
+    text-align: right;	
+}
+.jcml-left-btn input{
+	float:left;
+}
+#jcml_set_relation_wrap .full-width{
+	width: 100%;
+}
+.jcml-hidden{
+	display: none;
+}
+#jcml_set_rel_post_url.error{
+	background:#fecac2;
+}
+#jcml_set_rel_post_url.highlight{
+	background: #CFEA93;
+}
+#jcml_set_relation_wrap span.error,
+#jcml_translate_wrap span.error{
+	display: block;
+	color: #d00;
+}
+#jcml_save_rel_btn{
+	float: left;
+}
+#jcml_cancel_rel_btn,
+#jcml_cancel_trnsl_btn{
+	float: right;
+}
+.jcml-delete-translation{
+	float: right;
+	padding: 0 0 0 10px;
+	color: #d00;
+}
+.jcml-delete-translation:hover{
+	color:#a00;
+}
+#jcml_translate_wrap .wp-tab-panel,
+#jcml_set_relation_wrap .wp-tab-panel{
+	max-height: none;
+}
+#jcml_available_translations_wrapper table td{
+	vertical-align: top;
+}

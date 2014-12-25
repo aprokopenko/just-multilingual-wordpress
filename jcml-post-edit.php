@@ -1,9 +1,9 @@
 <?php
 /* @var $wpdb wpdb */
 
-function jcmst_post_add_meta_boxes() {
+function jcml_post_add_meta_boxes() {
 	// first check the language mapping
-	if( ! jcmst_is_blog_mapped() ) return;
+	if( ! jcml_is_blog_mapped() ) return;
 	
 	// TODO: get all registered post types
 	$screens = array( 'post', 'page' );
@@ -11,9 +11,9 @@ function jcmst_post_add_meta_boxes() {
 	foreach ( $screens as $screen ) {
 
 		add_meta_box(
-			'jcmst_translate_box',
+			'jcml_translate_box',
 			'Translations',
-			'jcmst_post_translate_meta_box',
+			'jcml_post_translate_meta_box',
 			$screen,
 			'side',
 			'high'
@@ -21,33 +21,33 @@ function jcmst_post_add_meta_boxes() {
 		
 	}
 }
-add_action( 'add_meta_boxes', 'jcmst_post_add_meta_boxes' );
+add_action( 'add_meta_boxes', 'jcml_post_add_meta_boxes' );
 
 /**
  *	add custom scripts and styles
  */
-function jcmst_post_edit_include_assets(){
+function jcml_post_edit_include_assets(){
 	// ui autocomplete
 	wp_register_script(
 			'ui-autocomplete',
-			WP_PLUGIN_URL.'/jcms-translate/assets/jquery-ui1.11.autocomplete.min',
+			jcml_plugin_url().'/assets/jquery-ui1.11.autocomplete.min',
 			array('jquery')
 		);
 	wp_enqueue_script('ui-autocomplete');
 
 	// network page script
 	wp_register_script(
-			'jcmst_post_edit',
-			WP_PLUGIN_URL.'/jcms-translate/assets/jcmst_post_edit.js',
+			'jcml_post_edit',
+			jcml_plugin_url().'/assets/jcml_post_edit.js',
 			array('jquery')
 		);
-	wp_enqueue_script('jcmst_post_edit');
+	wp_enqueue_script('jcml_post_edit');
 
 	// styles
-	wp_register_style('ui-autocomplete', WP_PLUGIN_URL.'/jcms-translate/assets/jquery-ui-1.11.autocomplete.min.css');
+	wp_register_style('ui-autocomplete', jcml_plugin_url().'/assets/jquery-ui-1.11.autocomplete.min.css');
 	wp_enqueue_style('ui-autocomplete');
-	wp_register_style('jcmst_post_edit', WP_PLUGIN_URL.'/jcms-translate/assets/jcmst_post_edit.css');
-	wp_enqueue_style('jcmst_post_edit');	
+	wp_register_style('jcml_post_edit', jcml_plugin_url().'/assets/jcml_post_edit.css');
+	wp_enqueue_style('jcml_post_edit');	
 }
 
 /**
@@ -55,27 +55,27 @@ function jcmst_post_edit_include_assets(){
  * 
  * @param WP_Post $post The object for the current post/page.
  */
-function jcmst_post_translate_meta_box( $post ) {
+function jcml_post_translate_meta_box( $post ) {
 //pa($post,1);
 	// Add an nonce field so we can check for it later.
-	wp_nonce_field( 'jcmst_translate_box', 'jcmst_translate_box_nonce' );
+	wp_nonce_field( 'jcml_translate_box', 'jcml_translate_box_nonce' );
 	
 	$blog_id = get_current_blog_id();
-	$lang = jcmst_get_blog_language($blog_id);
+	$lang = jcml_get_blog_language($blog_id);
 	
-	$language_options = jcmst_get_language_options($blog_id);
-	$languages = jcmst_get_languages($blog_id);
-	$translations = jcmst_get_post_translate_chain($post->ID, null, true);
+	$language_options = jcml_get_language_options($blog_id);
+	$languages = jcml_get_languages($blog_id);
+	$translations = jcml_get_post_translate_chain($post->ID, null, true);
 	
 	$translate_of = array('blog_id' => '', 'post_id' => '');
 	if( !empty($_GET['translate_of']) ){
 		$parts = explode(':', trim($_GET['translate_of']));
 		if( count($parts) == 2 ){
-			if( $translate_of_post = jcmst_get_post($parts[1], $parts[0]) ){
+			if( $translate_of_post = jcml_get_post($parts[1], $parts[0]) ){
 				$translate_of['blog_id'] = $parts[0];
 				$translate_of['post_id'] = $parts[1];
 				$translate_of['post'] = $translate_of_post;
-				$translate_of['lang'] = jcmst_get_blog_language($translate_of['blog_id']);
+				$translate_of['lang'] = jcml_get_blog_language($translate_of['blog_id']);
 			}
 		}
 	}
@@ -89,7 +89,7 @@ function jcmst_post_translate_meta_box( $post ) {
  * search post by keyword match in title
  * @global wpdb $wpdb
  */
-function jcmst_autocomplete_jcmst_post_search_by_title( $strict = false ){
+function jcml_autocomplete_jcml_post_search_by_title( $strict = false ){
 	global $wpdb;
 	
 	$term = trim($_POST['term']);
@@ -122,15 +122,15 @@ function jcmst_autocomplete_jcmst_post_search_by_title( $strict = false ){
 	if( $return )
 		return $results;
 	
-	jcmst_render_json($results);
+	jcml_render_json($results);
 }
 
-function jcmst_autocomplete_jcmst_post_search_by_url(){
+function jcml_autocomplete_jcml_post_search_by_url(){
 	global $wpdb;
 	
 	$term = trim($_POST['term']);
 	
-	$parsed = jcmst_parse_post_url($term, $_POST['post_type']);
+	$parsed = jcml_parse_post_url($term, $_POST['post_type']);
 	
 	$results = array(
 		'status' => 'notfound',
@@ -139,10 +139,10 @@ function jcmst_autocomplete_jcmst_post_search_by_url(){
 		$results['status'] = 'ok';
 	}
 	
-	jcmst_render_json($results);
+	jcml_render_json($results);
 }
 
-function jcmst_ajax_post_map_language(){
+function jcml_ajax_post_map_language(){
 	global $wpdb;
 	
 	$errors = [];
@@ -157,7 +157,7 @@ function jcmst_ajax_post_map_language(){
 	// validate
 	if( empty($post_id) && !empty($_POST['post_url']) )
 	{
-		$parsed = jcmst_parse_post_url($_POST['post_url'], $_POST['post_type']);
+		$parsed = jcml_parse_post_url($_POST['post_url'], $_POST['post_type']);
 		if( !empty($parsed['post_id']) ){
 			$post_id = $parsed['post_id'];
 			$blog_id = $parsed['blog_id'];
@@ -168,7 +168,7 @@ function jcmst_ajax_post_map_language(){
 		$errors[] = 'Please choose page from autocomplete tool or specify the valid URL.';
 	}
 
-	$maping_errors = jcmst_map_posts(
+	$maping_errors = jcml_map_posts(
 		array('blog_id' => $blog_id, 'post_id' => $post_id),
 		array('blog_id' => $origin_blog, 'post_id' => $origin_post)
 	);
@@ -176,7 +176,7 @@ function jcmst_ajax_post_map_language(){
 	$errors = array_merge($errors, $maping_errors);
 	
 	// get updated info
-	$translations = jcmst_get_post_translate_chain($origin_post, $origin_blog, true);
+	$translations = jcml_get_post_translate_chain($origin_post, $origin_blog, true);
 	
 	// prepare response
 	$results = array(
@@ -189,7 +189,7 @@ function jcmst_ajax_post_map_language(){
 		$results['status'] = 'ok';
 	}
 	
-	jcmst_render_json($results);
+	jcml_render_json($results);
 }
 
 /**
@@ -198,14 +198,14 @@ function jcmst_ajax_post_map_language(){
  * @param array $from	pair of (blog_id, post_id)
  * @param array $to		pair of (blog_id, post_id)
  */
-function jcmst_map_posts($from, $to){
+function jcml_map_posts($from, $to){
 	global $wpdb;
 
 	$errors = [];
 
 	// get existed chains
-	$from_info = jcmst_get_post_translate_chain($from['post_id'], $from['blog_id']);
-	$to_info = jcmst_get_post_translate_chain($to['post_id'], $to['blog_id']);
+	$from_info = jcml_get_post_translate_chain($from['post_id'], $from['blog_id']);
+	$to_info = jcml_get_post_translate_chain($to['post_id'], $to['blog_id']);
 	
 	// check for translation match errors
 	if( $from['blog_id'] == $to['blog_id'] ){
@@ -286,20 +286,20 @@ function jcmst_map_posts($from, $to){
 	return $errors;
 }
 
-function jcmst_ajax_post_detach_language(){
+function jcml_ajax_post_detach_language(){
 	global $wpdb;
 	
 	$post_id = (int)$_POST['id'];
 	$translation_id = (int)$_POST['translation_id'];
 	$wpdb->delete($wpdb->post_translations, array('id' => $translation_id));
 	
-	$translations = jcmst_get_post_translate_chain($post_id, null, true);
+	$translations = jcml_get_post_translate_chain($post_id, null, true);
 	$results = array(
 		'status' => 'ok',
 		'errors' => '',
 		'translations' => $translations,
 	);
-	jcmst_render_json($results);
+	jcml_render_json($results);
 }
 
 /**
@@ -307,7 +307,7 @@ function jcmst_ajax_post_detach_language(){
  *
  * @param int $post_id The ID of the post being saved.
  */
-function jcmst_post_translate_save_box( $post_id ) {
+function jcml_post_translate_save_box( $post_id ) {
 
 	/*
 	 * We need to verify this came from our screen and with proper authorization,
@@ -315,12 +315,12 @@ function jcmst_post_translate_save_box( $post_id ) {
 	 */
 
 	// Check if our nonce is set.
-	if ( ! isset( $_POST['jcmst_translate_box_nonce'] ) ) {
+	if ( ! isset( $_POST['jcml_translate_box_nonce'] ) ) {
 		return;
 	}
 
 	// Verify that the nonce is valid.
-	if ( ! wp_verify_nonce( $_POST['jcmst_translate_box_nonce'], 'jcmst_translate_box' ) ) {
+	if ( ! wp_verify_nonce( $_POST['jcml_translate_box_nonce'], 'jcml_translate_box' ) ) {
 		return;
 	}
 
@@ -346,7 +346,7 @@ function jcmst_post_translate_save_box( $post_id ) {
 	/* OK, it's safe for us to save the data now. */
 	
 	// Make sure that it is set.
-	if ( ! isset( $_POST['jcmst_translate_of'] ) ) {
+	if ( ! isset( $_POST['jcml_translate_of'] ) ) {
 		return;
 	}
 	
@@ -357,13 +357,13 @@ function jcmst_post_translate_save_box( $post_id ) {
 	}
 	
 	// actually add translation
-	$translate_of = $_POST['jcmst_translate_of'];
+	$translate_of = $_POST['jcml_translate_of'];
 	
 	$blog_id = get_current_blog_id();
-	$map_errors = jcmst_map_posts(
+	$map_errors = jcml_map_posts(
 		array('blog_id' => $translate_of['blog_id'], 'post_id' => $translate_of['post_id']),
 		array('blog_id' => $blog_id, 'post_id' => $post_id)
 	);
 	
 }
-add_action( 'save_post', 'jcmst_post_translate_save_box' );
+add_action( 'save_post', 'jcml_post_translate_save_box' );

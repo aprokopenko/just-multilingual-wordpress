@@ -28,7 +28,7 @@
 						<td><a target="_blank" href="<?php echo get_site_url($map->blog_id); ?>"><?php echo $map->domain.$map->path; ?></a></td>
 						<td><?php echo esc_html($map->language); ?></td>
 						<td><?php echo esc_html($map->alias); ?></td>
-						<td><span class="delete"><a href="?page=jcmst-lang-settings&detach=<?php echo $map->blog_id; ?>" onclick="if(!confirm('Are you sure you want detach this language from site?'))return false;"><span class="delete">detach</span></a></span></td>
+						<td><span class="delete"><a href="?page=jcml-lang-settings&detach=<?php echo $map->blog_id; ?>" onclick="if(!confirm('Are you sure you want detach this language from site?'))return false;"><span class="delete">detach</span></a></span></td>
 					</tr>
 				<?php endforeach; ?>
 			<?php endif; ?>
@@ -45,7 +45,7 @@
 		<div class="updated below-h2" id="message"><p><?php echo implode('<br/>', $messages); ?></p></div>
 	<?php endif; ?>
 		
-	<form action="?page=jcmst-lang-settings#add-new-lang" method="post" class="add-lng-form">
+	<form action="?page=jcml-lang-settings#add-new-lang" method="post" class="add-lng-form">
 		<table class="form-table">
 			<tbody>
 				<tr class="form-field form-required">

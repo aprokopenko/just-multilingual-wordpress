@@ -1,10 +1,6 @@
 <?php
-/**
- * @package JCMST
- * @version 0.1
- */
 /*
-Plugin Name: Wordpress Multisite as Multilanguage by JustCoded
+Plugin Name: Just Multilingual Wordpress by JustCoded
 Description: This plugin convert Multisite installation into full-featured multilingual site. (New sites are used as new languages and not as new user blogs)
 Author: Alex Prokopenko
 Version: 0.1
@@ -13,8 +9,8 @@ Author URI: http://justcoded.com
 /* @var $wpdb wpdb */
 
 defined('ABSPATH') or die("No script kiddies please!");
-define('JCMST_PATH', dirname(__FILE__));
-define('JCMST_DB_VERSION', 0.12);
+define('JCML_PATH', dirname(__FILE__));
+define('JCML_DB_VERSION', 0.12);
 
 if( !function_exists('pa') )
 {
@@ -25,54 +21,55 @@ if( !function_exists('pa') )
 	}
 }
 
-include_once JCMST_PATH.'/jcmst-install.php';
-include_once JCMST_PATH.'/jcmst-network-page.php';
-include_once JCMST_PATH.'/jcmst-post-edit.php';
+include_once JCML_PATH.'/jcml-install.php';
+include_once JCML_PATH.'/jcml-network-page.php';
+include_once JCML_PATH.'/jcml-post-edit.php';
+include_once JCML_PATH.'/jcml-theme.php';
 
-function jcmst_init(){
-	global $wpdb, $jcmst_inited;
+function jcml_init(){
+	global $wpdb, $jcml_inited;
 	
-	if(!empty($jcmst_inited)) return;
+	if(!empty($jcml_inited)) return;
 	
 	$wpdb->blog_languages = $wpdb->base_prefix . 'blog_languages';
 	$wpdb->post_translations = $wpdb->base_prefix . 'post_translations';
 	
 	// run install
-	$db_ver = get_option('jcmst_db_version', 0);
-	if( $db_ver < JCMST_DB_VERSION )
+	$db_ver = get_option('jcml_db_version', 0);
+	if( $db_ver < JCML_DB_VERSION )
 	{
-		jcmst_setup_db_scheme();
-		update_option('jcmst_db_version', JCMST_DB_VERSION);
+		jcml_setup_db_scheme();
+		update_option('jcml_db_version', JCML_DB_VERSION);
 	}
 	
 	// init admin ajax actions
-	add_action('wp_ajax_jcmst_get_blogs_domains_disabled', 'jcmst_autocomplete_get_blogs_domains_disabled');
-	add_action('wp_ajax_jcmst_post_search_by_title', 'jcmst_autocomplete_jcmst_post_search_by_title');
-	add_action('wp_ajax_jcmst_post_search_by_url', 'jcmst_autocomplete_jcmst_post_search_by_url');
-	add_action('wp_ajax_jcmst_post_map_language', 'jcmst_ajax_post_map_language');
-	add_action('wp_ajax_jcmst_post_detach_language', 'jcmst_ajax_post_detach_language');
+	add_action('wp_ajax_jcml_get_blogs_domains_disabled', 'jcml_autocomplete_get_blogs_domains_disabled');
+	add_action('wp_ajax_jcml_post_search_by_title', 'jcml_autocomplete_jcml_post_search_by_title');
+	add_action('wp_ajax_jcml_post_search_by_url', 'jcml_autocomplete_jcml_post_search_by_url');
+	add_action('wp_ajax_jcml_post_map_language', 'jcml_ajax_post_map_language');
+	add_action('wp_ajax_jcml_post_detach_language', 'jcml_ajax_post_detach_language');
 	
 	if( is_admin() ){
 		if( !empty($_GET['page']) && $_GET['page'] == 'jcmst-lang-settings' ){
-			jcmst_network_include_assets();
+			jcml_network_include_assets();
 		}
 		if( strpos($_SERVER['SCRIPT_NAME'], 'post') !== false ){
-			jcmst_post_edit_include_assets();
+			jcml_post_edit_include_assets();
 		}
 	}
 }
-add_action( 'admin_init', 'jcmst_init' );
+add_action( 'admin_init', 'jcml_init' );
 
 /**
  * check is blog with $blog_id is mapped to some language.
  * 
  * @param int $blog_id	default to current blog
  */
-function jcmst_is_blog_mapped($blog_id = null){
+function jcml_is_blog_mapped($blog_id = null){
 	if( !$blog_id )
 		$blog_id = get_current_blog_id();
 	
-	$lang = jcmst_get_blog_language($blog_id);
+	$lang = jcml_get_blog_language($blog_id);
 	if( !empty($lang) ) return true;
 	
 	return false;
@@ -83,7 +80,7 @@ function jcmst_is_blog_mapped($blog_id = null){
  * @param int $blog_id
  * @global wpdb $wpdb
  */
-function jcmst_get_blog_language( $blog_id ){
+function jcml_get_blog_language( $blog_id ){
 	global $wpdb;
 	
 	$blog_id = (int)$blog_id;
@@ -96,10 +93,10 @@ function jcmst_get_blog_language( $blog_id ){
  * @global wpdb $wpdb
  * @param int $exclude  blog_id of language to exclude from the languages
  */
-function jcmst_get_language_options( $exclude = 0 ){
+function jcml_get_language_options( $exclude = 0 ){
 	global $wpdb;
 	
-	$languages = jcmst_get_languages($exclude);
+	$languages = jcml_get_languages($exclude);
 	
 	$options = array();
 	foreach($languages as $lang){
@@ -114,7 +111,7 @@ function jcmst_get_language_options( $exclude = 0 ){
  * @global wpdb $wpdb
  * @param int $exclude
  */
-function jcmst_get_languages($exclude = 0){
+function jcml_get_languages($exclude = 0){
 	global $wpdb;
 	
 	$sql = "SELECT * FROM $wpdb->blog_languages bl INNER JOIN $wpdb->blogs as b ON b.blog_id = bl.blog_id"; 
@@ -138,7 +135,7 @@ function jcmst_get_languages($exclude = 0){
  * @param array $values		array of (key => value) pairs
  * @param string $selected	index of selected item
  */
-function jcmst_html_options($values, $selected = null){
+function jcml_html_options($values, $selected = null){
 	$html = '';
 	foreach( $values as $val => $label ) {
 		$html .= '<option value="'.esc_attr($val).'" '.selected($val, $selected, false).'>'.esc_html(ucfirst($label)).'</option>' . "\n";
@@ -150,7 +147,7 @@ function jcmst_html_options($values, $selected = null){
  * parse url to get: blog_id, blog domain, post slug
  * @param string $url
  */
-function jcmst_parse_post_url( $url, $post_type = 'page' ){
+function jcml_parse_post_url( $url, $post_type = 'page' ){
 	if( ! defined('SUBDOMAIN_INSTALL') ) return null;
 		
 	// make sure we always have ending slash
@@ -212,7 +209,7 @@ function jcmst_parse_post_url( $url, $post_type = 'page' ){
  * @param int $post_id
  * @param int $blog_id		Default: current blog
  */
-function jcmst_get_post_translate_chain($post_id, $blog_id = null, $detailed = false){
+function jcml_get_post_translate_chain($post_id, $blog_id = null, $detailed = false){
 	global $wpdb;
 	if( is_null($blog_id) ) 
 		$blog_id = get_current_blog_id();
@@ -249,7 +246,7 @@ function jcmst_get_post_translate_chain($post_id, $blog_id = null, $detailed = f
 			if( $transl->blog_id > 1 )
 				$table_prefix .= $transl->blog_id . '_';
 			$posts_table = $table_prefix . 'posts';
-			$chain[$key]->post = jcmst_get_post($transl->post_id, $transl->blog_id);
+			$chain[$key]->post = jcml_get_post($transl->post_id, $transl->blog_id);
 		}
 	}
 	
@@ -266,7 +263,7 @@ function jcmst_get_post_translate_chain($post_id, $blog_id = null, $detailed = f
  * @param int $post_id
  * @param int $blog_id
  */
-function jcmst_get_post($post_id, $blog_id = null){
+function jcml_get_post($post_id, $blog_id = null){
 	global $wpdb;
 	
 	if(  is_null($blog_id) ) $blog_id = get_current_blog_id();
@@ -280,10 +277,21 @@ function jcmst_get_post($post_id, $blog_id = null){
 }
 
 /**
+ * get current plugin installation folder
+ * @return string
+ */
+function jcml_plugin_url(){
+	$directory = dirname(__FILE__);
+	$parts = explode('/wp-content/plugins/', $directory);
+	$plugin_dir = $parts[1];
+	return WP_PLUGIN_URL.'/' . $plugin_dir;
+}
+
+/**
  * echo the json data with good headers and stop the script
  * @param mixed $data
  */
-function jcmst_render_json( $data ){
+function jcml_render_json( $data ){
 	header('Content-type: application/json, charset=utf-8');
 	echo json_encode($data);
 	exit;		

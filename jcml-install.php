@@ -5,7 +5,7 @@
  * DB scheme for custom tables
  * @global wpdb $wpdb
  */
-function jcmst_setup_db_scheme(){
+function jcml_setup_db_scheme(){
 	global $wpdb;
 	
 	$sql = "CREATE TABLE $wpdb->blog_languages (

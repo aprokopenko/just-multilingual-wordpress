@@ -3,15 +3,15 @@
 /**
  * Add custom page to network menu
  */
-function jcmst_network_menu(){
-	add_submenu_page( 'sites.php', 'Language mapping', 'Languages', 'manage_sites', 'jcmst-lang-settings', 'jcmst_network_language_settings' );	
+function jcml_network_menu(){
+	add_submenu_page( 'sites.php', 'Language mapping', 'Languages', 'manage_sites', 'jcmst-lang-settings', 'jcml_network_language_settings' );	
 }
-add_action('network_admin_menu', 'jcmst_network_menu');
+add_action('network_admin_menu', 'jcml_network_menu');
 
 /**
  * Network custom page to manage languages for sites
  */
-function jcmst_network_language_settings(){
+function jcml_network_language_settings(){
 	global $wpdb;
 	
 	$errors = $messages = [];
@@ -41,7 +41,7 @@ function jcmst_network_language_settings(){
 		{
 			// check again that we don't have this mapping
 			$_POST['term'] = $input['domain'];
-			$not_maped = jcmst_autocomplete_get_blogs_domains_disabled(true, true);
+			$not_maped = jcml_autocomplete_get_blogs_domains_disabled(true, true);
 			if( !in_array($input['domain'], $not_maped) )
 			{
 				$errors[] = 'This domain is already maped. Please detach it first.';
@@ -86,40 +86,40 @@ function jcmst_network_language_settings(){
 	include('views/network_language_settings.php');
 }
 
-function jcmst_network_include_assets(){
+function jcml_network_include_assets(){
 	/**
 	 *	add custom scripts
 	 */
 	// ui autocomplete
 	wp_register_script(
 			'ui-autocomplete',
-			WP_PLUGIN_URL.'/jcms-translate/assets/jquery-ui1.11.autocomplete.min',
+			jcml_plugin_url().'/assets/jquery-ui1.11.autocomplete.min',
 			array('jquery')
 		);
 	wp_enqueue_script('ui-autocomplete');
 
 	// network page script
 	wp_register_script(
-			'jcmst_network_page',
-			WP_PLUGIN_URL.'/jcms-translate/assets/jcmst_network_page.js',
+			'jcml_network_page',
+			jcml_plugin_url().'/assets/jcml_network_page.js',
 			array('jquery')
 		);
-	wp_enqueue_script('jcmst_network_page');
+	wp_enqueue_script('jcml_network_page');
 
 	/**
 	 * add custom styles
 	 */
-	wp_register_style('ui-autocomplete', WP_PLUGIN_URL.'/jcms-translate/assets/jquery-ui-1.11.autocomplete.min.css');
+	wp_register_style('ui-autocomplete', jcml_plugin_url().'/assets/jquery-ui-1.11.autocomplete.min.css');
 	wp_enqueue_style('ui-autocomplete');
-	wp_register_style('jcmst_network_page', WP_PLUGIN_URL.'/jcms-translate/assets/jcmst_network_page.css');
-	wp_enqueue_style('jcmst_network_page');
+	wp_register_style('jcml_network_page', jcml_plugin_url().'/assets/jcml_network_page.css');
+	wp_enqueue_style('jcml_network_page');
 }
 
 /**
  * return the array of not-mapped blogs
  * @global wpdb $wpdb
  */
-function jcmst_autocomplete_get_blogs_domains_disabled( $return = false, $strict = false ){
+function jcml_autocomplete_get_blogs_domains_disabled( $return = false, $strict = false ){
 	$term = trim($_POST['term']);
 	
 	global $wpdb;
@@ -144,5 +144,5 @@ function jcmst_autocomplete_get_blogs_domains_disabled( $return = false, $strict
 	if( $return )
 		return $results;
 	
-	jcmst_render_json($results);
+	jcml_render_json($results);
 }
