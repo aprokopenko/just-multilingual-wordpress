@@ -4,3 +4,46 @@
 span.delete{
 	color:#d00;
 }
+.jcml-row{
+	width:100%;
+	overflow: hidden;
+}
+.jcml-column-3{ float:left; width:22%; margin-right:15px; }
+.jcml-column-4{ float:left; width:31%; margin-right:15px; }
+.jcml-column-6{ float:left; width:43%; margin-right:15px; }
+.jcml-column-8{ float:left; width:64%; margin-right:15px; }
+.jcml-column-9{ float:left; width:73%; margin-right:15px; }
+
+h3.jcml-container-header{
+	background: #f1f1f1;
+	border: 1px solid #c6c6c6;
+	color: #333;
+	font-size: 12px;
+	line-height: 30px;
+	margin: 0;
+	padding: 0 10px;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+.jcml-form-container{
+	padding: 10px;
+	background: #fff;
+	border: 1px solid #c6c6c6;
+}
+
+.jcml-row ::-webkit-input-placeholder {
+   color:#494949;
+   font-size: 12px;
+}
+.jcml-row ::-moz-placeholder {
+   color:#494949;
+   font-size: 12px;
+}
+.jcml-row :-ms-input-placeholder {  
+   color:#494949;
+   font-size: 12px;
+}
+.jcml-row input,
+.jcml-row select,
+.jcml-row textarea{
+	line-height:20px;
+}
