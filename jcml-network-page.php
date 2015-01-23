@@ -12,6 +12,14 @@ add_action('network_admin_menu', 'jcml_network_menu');
  * Network custom page to manage languages for sites
  */
 function jcml_network_language_settings(){
+	echo json_encode($_POST); exit;
+	wp_register_script(
+			'add_language',
+			jcml_plugin_url().'/assets/add_language.js',
+			array('jquery')
+		);
+	wp_enqueue_script('add_language');
+	
 	global $wpdb;
 	
 	$errors = $messages = [];

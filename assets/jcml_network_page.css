@@ -4,3 +4,12 @@
 span.delete{
 	color:#d00;
 }
+
+.multilang-half-wide{
+	width: 50%;
+}
+
+.multilang-table-header{
+	background: #f1f1f1;
+	border: 1px solid #C6C6C6;
+}
