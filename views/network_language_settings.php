@@ -1,41 +1,13 @@
 
-<div class="wrap">
+<div class="wrap" id="page_wrap">
 	<h2>Language settings</h2>
 	<p>You can control language mapping for your sites here.</p>
-
-	<?php if( !empty($errors) ) : ?>
-		<div class="error below-h2" id="error"><p><?php echo implode('<br/>', $errors); ?></p></div>
-	<?php endif; ?>
-	<?php if( !empty($messages) ) : ?>
-		<div class="updated below-h2" id="message"><p><?php echo implode('<br/>', $messages); ?></p></div>
-	<?php endif; ?>
-
-	<table class="wp-list-table multilang-half-wide widefat fixed ">
-		<thead>
-			<tr class="multilang-table-header">
-				<th class="manage-column column-blogname"><span>Site Path</span></th>
-				<th class="manage-column column-blogname"><span>Language</span></th>
-				<th class="manage-column column-blogname"><span>Icon</span></th>
-				<th class="manage-column column-blogname"><span>&nbsp;</span></th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php if( empty($settings) ) : ?>
-				<tr><td colspan="4">You don't have any language mapping yet.</td></tr>
-			<?php else : ?>
-				<?php foreach( $settings as $map ) : ?>
-					<tr>
-						<td><a target="_blank" href="<?php echo get_site_url($map->blog_id); ?>"><?php echo $map->domain . $map->path; ?></a></td>
-						<td><?php echo esc_html($map->language); ?></td>
-						<td><?php echo esc_html($map->alias); ?></td>
-						<td><span class="delete"><a href="?page=jcmst-lang-settings&detach=<?php echo $map->blog_id; ?>" onclick="if (!confirm('Are you sure you want detach this language from site?'))
-									return false;"><span class="delete">detach</span></a></span></td>
-					</tr>
-				<?php endforeach; ?>
-<?php endif; ?>
-		</tbody>
-	</table>
-
+	<div class="errors_and_messages">
+	<?php include('partials/_partial_errors_and_messages.php'); ?> 
+	</div>
+		<div id="partial_network_languages">
+	<?php include('partials/_partial_network_languages.php'); ?> 
+		</div>
 	<br/>
 	
 	<table class="wp-list-table add-lng-form widefat fixed ">
@@ -45,12 +17,9 @@
 		</tr>
 		<tr>
 			<td colspan="2">
-				<?php if( !empty($errors) ) : ?>
-					<div class="error below-h2" id="error"><p><?php echo implode('<br/>', $errors); ?></p></div>
-				<?php endif; ?>
-				<?php if( !empty($messages) ) : ?>
-					<div class="updated below-h2" id="message"><p><?php echo implode('<br/>', $messages); ?></p></div>
-				<?php endif; ?>
+				<div class="errors_and_messages">
+				<?php include('partials/_partial_errors_and_messages.php'); ?> 
+				</div>
 			</td>
 		</tr>
 		<tr class="form-field form-required">
