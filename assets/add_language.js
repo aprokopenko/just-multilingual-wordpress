@@ -6,8 +6,10 @@ jQuery(document).ready(function() {
 			language: jQuery(this).serialize(),
 		};
 		jQuery.post(ajaxurl, data, function(response) {
+			//refreshing parts of a page (errors, messages and language grid)
 			jQuery('#partial_network_languages').html(response['languages']);
 			jQuery('.errors_and_messages').html(response['messages']);
+			//clearing form if no errors
 			if (response['clear_form'])
 				jQuery('#add-language-form')[0].reset();
 		});
@@ -17,6 +19,8 @@ jQuery(document).ready(function() {
 
 });
 
+
+//ajax remove language mapping
 function detachLang(id) {
 	if (confirm('Are you sure you want detach this language from site?')) {
 
@@ -25,6 +29,7 @@ function detachLang(id) {
 			id: id,
 		};
 		jQuery.post(ajaxurl, data, function(response) {
+			//refreshing parts of a page (errors, messages and language grid)
 			jQuery('#partial_network_languages').html(response['languages']);
 			jQuery('.errors_and_messages').html(response['messages']);
 		});
