@@ -46,9 +46,8 @@ function jcml_init(){
 	add_action('wp_ajax_jcml_get_blogs_domains_disabled', 'jcml_autocomplete_get_blogs_domains_disabled');
 	
 	add_action('wp_ajax_jcml_add_language', 'jcml_add_language');
-	add_action('wp_ajax_nopriv_jcml_add_language', 'jcml_add_language' );
 	add_action('wp_ajax_jcml_remove_language', 'jcml_remove_language');
-	add_action('wp_ajax_nopriv_jcml_remove_language', 'jcml_remove_language' );
+	add_action('wp_ajax_jcml_edit_language', 'jcml_edit_language');
 	
 	add_action('wp_ajax_jcml_post_search_by_title', 'jcml_autocomplete_jcml_post_search_by_title');
 	add_action('wp_ajax_jcml_post_search_by_url', 'jcml_autocomplete_jcml_post_search_by_url');
