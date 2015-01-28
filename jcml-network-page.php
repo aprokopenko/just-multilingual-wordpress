@@ -114,7 +114,7 @@ function jcml_add_language()
 }
 
 /**
- * Ajaxed add language action
+ * Ajaxed edit language action
  */
 function jcml_edit_language()
 {
@@ -132,7 +132,7 @@ function jcml_edit_language()
 	if( !empty($values['language']['id']) )
 	{
 		$id = $values['language']['id'];
-		$query = $wpdb->update($wpdb->blog_languages, array('language' => $values['language']['language'],'alias' => $values['language']['alias']), array('blog_id' => $id));
+		$wpdb->update($wpdb->blog_languages, array('language' => $values['language']['language'],'alias' => $values['language']['alias']), array('blog_id' => $id));
 		$blog = get_blog_details($id);
 		
 		$blog = array(

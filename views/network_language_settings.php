@@ -28,12 +28,11 @@
 					<?php foreach( $settings as $map ) : ?>
 						<tr id="jcml_fieldset_lang_<?php echo $map->blog_id; ?>">
 							<td><a target="_blank" href="<?php echo get_site_url($map->blog_id); ?>"><?php echo $map->domain . $map->path; ?></a></td>
-							<td><?php echo esc_html($map->language); ?></td>
-							<td><?php echo esc_html($map->alias); ?></td>
-							<td>
-								<span class=""><a href="#" id="editlang_<?php echo $map->blog_id; ?>" class="edit_lang_button" ><span class="">edit</span></a></span>
-								|
-								<span class="delete"><a href="#" id="deletelang_<?php echo $map->blog_id; ?>" class="detach_lang_button" ><span class="delete">detach</span></a></span>
+							<td class="map-lang"><?php echo esc_html($map->language); ?></td>
+							<td class="map-alias"><?php echo esc_html($map->alias); ?></td>
+							<td id="lang_<?php echo $map->blog_id; ?>">
+								<span class=""><a href="#" class="edit_lang_button" ><span class="">edit</span></a></span> | 
+								<span class="delete"><a href="#"  class="detach_lang_button" ><span class="delete">detach</span></a></span>
 								<img class="ajax-feedback " alt="" title="" src="<?php echo get_bloginfo('url') ?>/wp-admin/images/wpspin_light.gif" style="visibility: hidden;">
 							</td>
 						</tr>
@@ -51,18 +50,7 @@
 			<tr class="multilang-table-header">
 				<th colspan="2"><h3 id="add-new-lang">Add new language</h3></th>
 			</tr>
-			<tr>
-				<td colspan="2">
-					<div class="errors_and_messages">
-						<?php if( !empty($errors) ) : ?>
-							<div class="error below-h2" id="error"><p><?php echo implode('<br/>', $errors); ?></p></div>
-						<?php endif; ?>
-						<?php if( !empty($messages) ) : ?>
-							<div class="updated below-h2" id="message"><p><?php echo implode('<br/>', $messages); ?></p></div>
-						<?php endif; ?>
-					</div>
-				</td>
-			</tr>
+			
 			<tr class="form-field form-required">
 				<td>Site Address</td>
 				<td class="autocomplete-field">
@@ -100,27 +88,16 @@
 		<div id="edit-form-holder">
 	<table class="wp-list-table add-lng-form widefat fixed ">
 		<form action="#" method="post" class="add-lng-form" id="edit-language-form" >
-			<input id="edit-domain-id" type="hidden"   class="regular-text-edit" name="language[id]"
+			<input id="edit-domain-id" type="hidden"   class="regular-text-edit" name="language[id]">
 			<tr class="multilang-table-header">
 				<th colspan="2"><h3 id="edit-lang">Edit <span id="domain_edited"></span></h3></th>
 			</tr>
-			<tr>
-				<td colspan="2">
-					<div class="errors_and_messages">
-						<?php if( !empty($errors) ) : ?>
-							<div class="error below-h2" id="error"><p><?php echo implode('<br/>', $errors); ?></p></div>
-						<?php endif; ?>
-						<?php if( !empty($messages) ) : ?>
-							<div class="updated below-h2" id="message"><p><?php echo implode('<br/>', $messages); ?></p></div>
-						<?php endif; ?>
-					</div>
-				</td>
-			</tr>
+			
 			
 			<tr class="form-field form-required">
 				<td>Language code</td>
 				<td>
-					<input type="text" title="Language code" class="regular-text-edit" name="language[language]"
+					<input type="text" title="Language code" class="regular-text-edit" name="language[language]" id='edit-language'
 						   value="<?php echo esc_attr(@$input['language']); ?>">
 					<p class="hint">ex. 'en'</p>
 				</td>
@@ -128,7 +105,7 @@
 			<tr class="form-field">
 				<td>Language Alias</td>
 				<td>
-					<input type="text" title="Language alias" class="regular-text-edit" name="language[alias]"
+					<input type="text" title="Language alias" class="regular-text-edit" name="language[alias]" id='edit-alias'
 						   value="<?php echo esc_attr(@$input['alias']); ?>">
 					<p class="hint">ex. 'English'</p>
 				</td>
