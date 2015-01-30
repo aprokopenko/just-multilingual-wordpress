@@ -19,13 +19,13 @@ span.delete{
 	width:60%;
 }
 
-#add-form-holder{
+#jcml-add-form-holder{
 	float: left;
 	width:33%;
 	display: none;
 }
 
-#edit-form-holder{
+#jcml-edit-form-holder{
 	float: left;
 	width:33%;
 	display: none;

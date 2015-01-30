@@ -48,6 +48,8 @@ function jcml_init(){
 	add_action('wp_ajax_jcml_add_language', 'jcml_add_language');
 	add_action('wp_ajax_jcml_remove_language', 'jcml_remove_language');
 	add_action('wp_ajax_jcml_edit_language', 'jcml_edit_language');
+	add_action('wp_ajax_jcml_get_mapping', 'jcml_get_mapping');
+	
 	
 	add_action('wp_ajax_jcml_post_search_by_title', 'jcml_autocomplete_jcml_post_search_by_title');
 	add_action('wp_ajax_jcml_post_search_by_url', 'jcml_autocomplete_jcml_post_search_by_url');
@@ -287,7 +289,8 @@ function jcml_get_post($post_id, $blog_id = null){
  */
 function jcml_plugin_url(){
 	$directory = dirname(__FILE__);
-	$parts = explode('/wp-content/plugins/', $directory);
+	$separator = DIRECTORY_SEPARATOR;
+	$parts = explode($separator.'wp-content'.$separator.'plugins'.$separator, $directory);
 	$plugin_dir = $parts[1];
 	return WP_PLUGIN_URL.'/' . $plugin_dir;
 }
