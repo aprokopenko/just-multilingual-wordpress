@@ -282,7 +282,8 @@ function jcml_get_post($post_id, $blog_id = null){
  */
 function jcml_plugin_url(){
 	$directory = dirname(__FILE__);
-	$parts = explode('/wp-content/plugins/', $directory);
+	$separator = DIRECTORY_SEPARATOR;
+	$parts = explode($separator.'wp-content'.$separator.'plugins'.$separator, $directory);
 	$plugin_dir = $parts[1];
 	return WP_PLUGIN_URL.'/' . $plugin_dir;
 }
