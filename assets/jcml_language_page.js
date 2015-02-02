@@ -106,7 +106,7 @@ jQuery(document).ready(function() {
 	    //filling form with default values
 	    jQuery('input#jcml-edit-language').val(response.data['language']);
 	    jQuery('input#jcml-edit-alias').val(response.data['alias']);
-	    jQuery('#jcml_domain_edited').html(response.data['domain']);
+	    jQuery('#jcml-edit-domain').val(response.data['domain']);
 	    jQuery('#jcml-edit-form-holder').show();
 	    jQuery('#jcml-edit-domain-id').val(id);
 	});

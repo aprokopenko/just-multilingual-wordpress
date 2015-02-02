@@ -57,7 +57,7 @@ function jcml_init(){
 	add_action('wp_ajax_jcml_post_detach_language', 'jcml_ajax_post_detach_language');
 	
 	if( is_admin() ){
-		if( !empty($_GET['page']) && $_GET['page'] == 'jcmst-lang-settings' ){
+		if( !empty($_GET['page']) && $_GET['page'] == 'jcml-lang-settings' ){
 			jcml_network_include_assets();
 		}
 		if( strpos($_SERVER['SCRIPT_NAME'], 'post') !== false ){

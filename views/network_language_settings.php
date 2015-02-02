@@ -11,13 +11,13 @@
 	<?php endif; ?>
     </div>
     <div id="partial_network_languages">
-	<div id="langs-table" >
+	<div id="langs-table" class="language-box">
 	    <table class="wp-list-table multilang-half-wide widefat fixed ">
 		<thead>
 		    <tr class="multilang-table-header">			
 			<th class="manage-column column-blogname"><span>Site Path</span></th>
 			<th class="manage-column column-blogname"><span>Language</span></th>
-			<th class="manage-column column-blogname"><span>Icon</span></th>
+			<th class="manage-column column-blogname"><span>Language Alias</span></th>
 			<th class="manage-column column-blogname"><span>&nbsp;</span></th>
 		    </tr>
 		</thead>
@@ -44,11 +44,11 @@
 		<input type="submit" value="Add New Language" class="button button-primary" id="jcml_new_lang_button">
 	    </div>
 	</div>
-	<div id="jcml-add-form-holder">
+	<div id="jcml-add-form-holder" class="language-box">
 	    <table class="wp-list-table add-lng-form widefat fixed ">
-		<form action="?page=jcmst-lang-settings#add-new-lang" method="post" class="add-lng-form" id="jcml-add-language-form" name="jcml-add-language-form">
+		<form action="?page=jcml-lang-settings#add-new-lang" method="post" class="add-lng-form" id="jcml-add-language-form" name="jcml-add-language-form">
 		    <tr class="multilang-table-header">
-			<th colspan="2"><h3 id="add-new-lang">Add new language</h3></th>
+			<th colspan="2">Add New Language</th>
 		    </tr>
 
 		    <tr class="form-field form-required">
@@ -59,7 +59,7 @@
 			</td>
 		    </tr>
 		    <tr class="form-field form-required">
-			<td>Language code</td>
+			<td>Language Code</td>
 			<td>
 			    <input type="text" title="Language code" class="regular-text" name="language[language]"
 				   value="<?php echo esc_attr(@$input['language']); ?>">
@@ -85,17 +85,24 @@
 	    </table>
 	</div>
 
-	<div id="jcml-edit-form-holder">
+	<div id="jcml-edit-form-holder" class="language-box">
 	    <table class="wp-list-table add-lng-form widefat fixed ">
 		<form action="#" method="post" class="add-lng-form" id="jcml-edit-language-form" >
 		    <input id="jcml-edit-domain-id" type="hidden"   class="regular-text-edit" name="language[id]">
 		    <tr class="multilang-table-header">
-			<th colspan="2"><h3 id="edit-lang">Edit <span id="jcml_domain_edited"></span></h3></th>
+			<th colspan="2">Edit Language</th>
 		    </tr>
 
-
+			<tr class="form-field">
+			<td>Domain</td>
+			<td>
+			    <input type="text" title="Language alias" class="regular-text-edit" name="language[domain]" id='jcml-edit-domain' readonly
+				   value="<?php echo esc_attr(@$input['domain']); ?>">
+			   
+			</td>
+		    </tr>
 		    <tr class="form-field form-required">
-			<td>Language code</td>
+			<td>Language Code</td>
 			<td>
 			    <input type="text" title="Language code" class="regular-text-edit" name="language[language]" id='jcml-edit-language'
 				   value="<?php echo esc_attr(@$input['language']); ?>">

@@ -4,7 +4,7 @@
  * Add custom page to network menu
  */
 function jcml_network_menu() {
-    add_submenu_page('sites.php', 'Language mapping', 'Languages', 'manage_sites', 'jcmst-lang-settings', 'jcml_network_language_settings');
+    add_submenu_page('sites.php', 'Language mapping', 'Languages', 'manage_sites', 'jcml-lang-settings', 'jcml_network_language_settings');
 }
 
 add_action('network_admin_menu', 'jcml_network_menu');
@@ -14,10 +14,7 @@ add_action('network_admin_menu', 'jcml_network_menu');
  */
 function jcml_network_language_settings() {
 
-    wp_register_script(
-	    'language_page', jcml_plugin_url() . '/assets/jcml_language_page.js', array('jquery')
-    );
-    wp_enqueue_script('language_page');
+   
 
     global $wpdb;
 
@@ -196,6 +193,11 @@ function jcml_network_include_assets() {
 	    'jcml_network_page', jcml_plugin_url() . '/assets/jcml_network_page.js', array('jquery')
     );
     wp_enqueue_script('jcml_network_page');
+	
+	 wp_register_script(
+	    'language_page', jcml_plugin_url() . '/assets/jcml_language_page.js', array('jquery')
+    );
+    wp_enqueue_script('language_page');
 
     /**
      * add custom styles
