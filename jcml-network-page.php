@@ -5,13 +5,20 @@
  */
 function jcml_network_menu(){
 	add_submenu_page( 'sites.php', 'Language mapping', 'Languages', 'manage_sites', 'jcmst-lang-settings', 'jcml_network_language_settings' );	
-	add_submenu_page( 'sites.php', 'Language mapping', 'Post Types', 'manage_sites', 'jcml-post-types', 'jcml_network_language_post_types' );	
+	add_submenu_page( 'sites.php', 'Language mapping', 'Post Types', 'manage_sites', 'jcml-post-types', 'jcml_network_language_posttypes' );	
 }
 add_action('network_admin_menu', 'jcml_network_menu');
 
 
-function jcml_network_language_post_types(){
+function jcml_network_language_posttypes(){
 	global $wpdb;
+
+	$errors = $messages = [];
+
+	// get current settings
+	$post_types = get_post_types(array(),'objects');
+
+	include('views/network_language_posttypes.php');
 }
 /**
  * Network custom page to manage languages for sites
