@@ -5,9 +5,14 @@
  */
 function jcml_network_menu(){
 	add_submenu_page( 'sites.php', 'Language mapping', 'Languages', 'manage_sites', 'jcmst-lang-settings', 'jcml_network_language_settings' );	
+	add_submenu_page( 'sites.php', 'Language mapping', 'Post Types', 'manage_sites', 'jcml-post-types', 'jcml_network_language_post_types' );	
 }
 add_action('network_admin_menu', 'jcml_network_menu');
 
+
+function jcml_network_language_post_types(){
+	global $wpdb;
+}
 /**
  * Network custom page to manage languages for sites
  */
