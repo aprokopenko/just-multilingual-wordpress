@@ -17,6 +17,18 @@
 #jcml_set_rel_post_url.highlight{
 	background: #CFEA93;
 }
+
+#jcml_set_rel_post_url, .button-edit-post-lang{
+	margin-bottom: 15px !important;
+}
+
+#jcml_set_relation_wrap, #jcml_translate_wrap{
+	margin-top: 10px;
+}
+
+.jcmst-delete-translation{
+	color: red;
+}
 #jcml_set_relation_wrap span.error,
 #jcml_translate_wrap span.error{
 	display: block;
