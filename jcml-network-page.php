@@ -5,7 +5,7 @@
  */
 
 function jcml_network_menu(){
-	add_submenu_page( 'sites.php', 'Language mapping', 'Languages', 'manage_sites', 'jcmst-lang-settings', 'jcml_network_language_settings' );	
+	add_submenu_page('sites.php', 'Language mapping', 'Languages', 'manage_sites', 'jcml-lang-settings', 'jcml_network_language_settings');
 	add_submenu_page( 'sites.php', 'Language mapping', 'Post Types', 'manage_sites', 'jcml-lang-posttypes', 'jcml_network_language_posttypes' );	
 
 }
