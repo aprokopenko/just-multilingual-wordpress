@@ -70,8 +70,8 @@ $maped_languages = array();
 			   value="" class="full-width"
 			   data-post_type="<?php echo esc_attr($post->post_type); ?>"
 			   />
-		<input type="button" class="button" id="jcml_save_rel_btn" value="Save">
-		<input type="button" class="button" id="jcml_cancel_rel_btn" value="Cancel" data-target="#jcml_set_relation_wrap">
+		<input type="button" class="button button-edit-post-lang" id="jcml_save_rel_btn" value="Save">
+		<input type="button" class="button button-edit-post-lang" id="jcml_cancel_rel_btn" value="Cancel" data-target="#jcml_set_relation_wrap">
 		<br><br>
 	</div>
 </div>
@@ -96,7 +96,7 @@ $maped_languages = array();
 			<p style="color:#d00;">...It seems you already have all translations.</p>
 		<?php endif; ?>
 
-		<input type="button" class="button" id="jcml_cancel_trnsl_btn" value="Cancel" data-target="#jcml_translate_wrap">
+		<input type="button" class="button button-edit-post-lang" id="jcml_cancel_trnsl_btn" value="Cancel" data-target="#jcml_translate_wrap">
 	</div>
 </div>
 
