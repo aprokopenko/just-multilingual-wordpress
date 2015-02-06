@@ -32,10 +32,9 @@ add_action('add_meta_boxes', 'jcml_post_add_meta_boxes');
 function jcml_post_edit_include_assets()
 {
 	// ui autocomplete
-	wp_register_script(
-			'ui-autocomplete', jcml_plugin_url() . '/assets/jquery-ui1.11.autocomplete.min', array('jquery')
-	);
-	wp_enqueue_script('ui-autocomplete');
+
+	wp_enqueue_script( 'jquery-ui-autocomplete' );
+
 
 	// network page script
 	wp_register_script(

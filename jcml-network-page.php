@@ -133,13 +133,7 @@ function jcml_network_include_assets(){
 	 *	add custom scripts
 	 */
 	// ui autocomplete
-	wp_register_script(
-			'ui-autocomplete',
-			jcml_plugin_url().'/assets/jquery-ui1.11.autocomplete.min',
-			array('jquery')
-		);
-	wp_enqueue_script('ui-autocomplete');
-
+	wp_enqueue_script( 'jquery-ui-autocomplete' );
 	// network page script
 	wp_register_script(
 			'jcml_network_page',
