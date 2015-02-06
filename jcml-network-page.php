@@ -5,9 +5,51 @@
  */
 function jcml_network_menu(){
 	add_submenu_page( 'sites.php', 'Language mapping', 'Languages', 'manage_sites', 'jcmst-lang-settings', 'jcml_network_language_settings' );	
+	add_submenu_page( 'sites.php', 'Language mapping', 'Post Types', 'manage_sites', 'jcml-lang-posttypes', 'jcml_network_language_posttypes' );	
 }
 add_action('network_admin_menu', 'jcml_network_menu');
 
+/*
+ * Post type page, where admin can configure post types, that should be translatable
+ */
+function jcml_network_language_posttypes(){
+	global $wpdb;
+
+	$errors = $messages = [];
+
+	// get current settings
+	$post_types = get_post_types();
+	$post_types_objects = array();
+	
+	foreach($post_types as $key => $val){
+		$obj = get_post_type_object($key);
+		$post_types[$key] = array('label' => $obj->labels->name,'checked' => 0);
+		
+	}
+	//if form submitted
+	if( !empty($_POST['posttype']) ){
+		
+		foreach($post_types as $name => $arr){
+			if(isset($_POST['posttype'][$name]))
+				add_option('jcml_lang_posttype_'.$name,1);
+			else
+				delete_option('jcml_lang_posttype_' .$name);
+		}
+		
+	}
+	$set_types = array();
+	
+	foreach($post_types as $key => $val){
+		$set_type = get_option('jcml_lang_posttype_'.$key);
+		
+		if($set_type)
+			$post_types[$key]['checked'] = 1;
+	}
+	
+	
+	
+	include('views/network_language_posttypes.php');
+}
 /**
  * Network custom page to manage languages for sites
  */
