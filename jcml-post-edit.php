@@ -2,8 +2,7 @@
 
 /* @var $wpdb wpdb */
 
-function jcml_post_add_meta_boxes()
-{
+function jcml_post_add_meta_boxes(){
 	$post_type = get_post_type();
 
 	// first check the language mapping
@@ -29,8 +28,7 @@ add_action('add_meta_boxes', 'jcml_post_add_meta_boxes');
 /**
  * 	add custom scripts and styles
  */
-function jcml_post_edit_include_assets()
-{
+function jcml_post_edit_include_assets(){
 	// ui autocomplete
 
 	wp_enqueue_script( 'jquery-ui-autocomplete' );
@@ -54,8 +52,7 @@ function jcml_post_edit_include_assets()
  * 
  * @param WP_Post $post The object for the current post/page.
  */
-function jcml_post_translate_meta_box( $post )
-{
+function jcml_post_translate_meta_box( $post ){
 //pa($post,1);
 	// Add an nonce field so we can check for it later.
 	wp_nonce_field('jcml_translate_box', 'jcml_translate_box_nonce');
@@ -91,8 +88,7 @@ function jcml_post_translate_meta_box( $post )
  * search post by keyword match in title
  * @global wpdb $wpdb
  */
-function jcml_autocomplete_jcml_post_search_by_title( $strict = false )
-{
+function jcml_autocomplete_jcml_post_search_by_title( $strict = false ){
 	global $wpdb;
 
 	$term = trim($_POST['term']);
@@ -130,8 +126,7 @@ function jcml_autocomplete_jcml_post_search_by_title( $strict = false )
 	jcml_render_json($results);
 }
 
-function jcml_autocomplete_jcml_post_search_by_url()
-{
+function jcml_autocomplete_jcml_post_search_by_url(){
 	global $wpdb;
 
 	$term = trim($_POST['term']);
@@ -149,8 +144,7 @@ function jcml_autocomplete_jcml_post_search_by_url()
 	jcml_render_json($results);
 }
 
-function jcml_ajax_post_map_language()
-{
+function jcml_ajax_post_map_language(){
 	global $wpdb;
 
 	$errors = [];
@@ -208,8 +202,7 @@ function jcml_ajax_post_map_language()
  * @param array $from	pair of (blog_id, post_id)
  * @param array $to		pair of (blog_id, post_id)
  */
-function jcml_map_posts( $from, $to )
-{
+function jcml_map_posts( $from, $to ){
 	global $wpdb;
 
 	$errors = [];
@@ -309,8 +302,7 @@ function jcml_map_posts( $from, $to )
 	return $errors;
 }
 
-function jcml_ajax_post_detach_language()
-{
+function jcml_ajax_post_detach_language(){
 	global $wpdb;
 
 	$post_id = (int) $_POST['id'];
@@ -331,8 +323,7 @@ function jcml_ajax_post_detach_language()
  *
  * @param int $post_id The ID of the post being saved.
  */
-function jcml_post_translate_save_box( $post_id )
-{
+function jcml_post_translate_save_box( $post_id ){
 
 	/*
 	 * We need to verify this came from our screen and with proper authorization,

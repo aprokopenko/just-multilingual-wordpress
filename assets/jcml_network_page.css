@@ -1,6 +1,36 @@
-.add-lng-form{
-	width:33%;
-}
+
 span.delete{
 	color:#d00;
+}
+
+
+
+.multilang-table-header{
+	background: #f1f1f1;
+	border: 1px solid #C6C6C6;
+}
+
+#partial_network_languages{
+	overflow: hidden;
+}
+
+#langs-table{
+	float: left;
+	width:60%;
+}
+
+#jcml-add-form-holder{
+	float: left;
+	width:33%;
+	display: none;
+}
+
+#jcml-edit-form-holder{
+	float: left;
+	width:33%;
+	display: none;
+}
+
+.language-box{
+	margin:10px;
 }
