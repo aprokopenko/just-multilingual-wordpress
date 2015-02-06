@@ -26,6 +26,21 @@ include_once JCML_PATH.'/jcml-network-page.php';
 include_once JCML_PATH.'/jcml-post-edit.php';
 include_once JCML_PATH.'/jcml-theme.php';
 
+function just_multilingual_wordpress_activate()
+{
+	if( !is_multisite() )
+	{
+
+		deactivate_plugins(plugin_basename(__FILE__));
+		$message = '<p>You have to activate Multisite feature to use this plugin. Plugin will be deactivated now.<br> For more information please visit:</p> '
+				. '<p><a href="http://codex.wordpress.org/Create_A_Network">http://codex.wordpress.org/Create_A_Network</a></p>'
+				. '<p><a href="' . wp_get_referer() . '">Back</a></p>';
+		wp_die(__($message, 'my-plugin'));
+	}
+}
+
+register_activation_hook(__FILE__, 'just_multilingual_wordpress_activate');
+
 function jcml_init(){
 	global $wpdb, $jcml_inited;
 	
