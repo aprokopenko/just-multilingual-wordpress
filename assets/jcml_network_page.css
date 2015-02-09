@@ -58,3 +58,7 @@ span.delete{
 .multilang-table-header .table-header-alias{
 	width: 150px
 }
+
+.form-field td input{
+	padding: 5px 5px;
+}
