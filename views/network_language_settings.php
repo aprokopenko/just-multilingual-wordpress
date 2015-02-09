@@ -15,10 +15,10 @@
 			<table class="wp-list-table multilang-half-wide widefat fixed ">
 				<thead>
 					<tr class="multilang-table-header">			
-						<th class="manage-column column-blogname"><span>Site Path</span></th>
-						<th class="manage-column column-blogname"><span>Language</span></th>
-						<th class="manage-column column-blogname"><span>Language Alias</span></th>
-						<th class="manage-column column-blogname"><span>&nbsp;</span></th>
+						<th class="manage-column column-blogname table-header-path"><span>Site Path</span></th>
+						<th class="manage-column column-blogname table-header-language"><span>Language</span></th>
+						<th class="manage-column column-blogname table-header-alias"><span>Language Alias</span></th>
+						<th class="manage-column column-blogname table-header-actions"><span>&nbsp;</span></th>
 					</tr>
 				</thead>
 				<tbody id="jcml_mapped_languages_table">
@@ -52,9 +52,9 @@
 					</tr>
 
 					<tr class="form-field form-required">
-						<td>Site Address</td>
+						<td>Site Path</td>
 						<td class="autocomplete-field">
-							<input id="jcml_blog_domain" type="text" title="Domain" placeholder="Start typing the domain..." class="regular-text" name="language[domain]"
+							<input id="jcml_blog_domain" type="text" title="Site Path" placeholder="Start typing the domain..." class="regular-text" name="language[domain]"
 								   value="<?php echo esc_attr(@$input['domain']); ?>">
 						</td>
 					</tr>
@@ -94,7 +94,7 @@
 					</tr>
 
 					<tr class="form-field">
-						<td>Domain</td>
+						<td>Site Path</td>
 						<td>
 							<input type="text" title="Language alias" class="regular-text-edit" name="language[domain]" id='jcml-edit-domain' readonly
 								   value="<?php echo esc_attr(@$input['domain']); ?>">

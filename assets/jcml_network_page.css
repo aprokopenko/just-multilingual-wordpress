@@ -16,7 +16,7 @@ span.delete{
 
 #langs-table{
 	float: left;
-	width:60%;
+	width:40%;
 }
 
 #jcml-add-form-holder{
@@ -32,5 +32,29 @@ span.delete{
 }
 
 .language-box{
-	margin:10px;
+	margin-right:10px;
+}
+
+.form-field:first-child{
+	width: 40px;
+}
+
+.add-lng-form{
+	table-layout: auto !important;
+}
+
+.form-field td:first-of-type{
+	width: 100px;
+}
+
+.multilang-table-header .table-header-language{
+	width: 100px
+}
+
+.multilang-table-header .table-header-path{
+	width: 200px
+}
+
+.multilang-table-header .table-header-alias{
+	width: 150px
 }
