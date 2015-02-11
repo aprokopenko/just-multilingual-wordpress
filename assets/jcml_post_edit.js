@@ -2,8 +2,10 @@ jQuery(document).ready(function(){
 	
 	// add click event to buttons to open hidden boxes 
 	jQuery(document).on('click', 'div.jcml-translate-actions input, #jcml_cancel_rel_btn, #jcml_cancel_trnsl_btn', function(){
+		
 		var $this = jQuery(this);
 		var wrapper_id = $this.data('target');
+		jQuery('.togglable-boxes').addClass('hide-if-js').find('span.error').remove();
 		jQuery(wrapper_id).toggleClass('hide-if-js').find('span.error').remove();
 	})
 	

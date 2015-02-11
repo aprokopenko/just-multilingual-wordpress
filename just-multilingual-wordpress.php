@@ -37,8 +37,9 @@ function just_multilingual_wordpress_activate(){
 	{
 
 		deactivate_plugins(plugin_basename(__FILE__));
-		$message = '<p>You have to activate Multisite feature to use this plugin. Plugin will be deactivated now.<br> For more information please visit:</p> '
-				. '<p><a href="http://codex.wordpress.org/Create_A_Network">http://codex.wordpress.org/Create_A_Network</a></p>'
+		$message = "<p>This plugin only available for WordPress MultiSite installation. If you're working with new site please re-install your WordPress according to the MultiSite installation manual.</p> "
+				. '<p>For more information please visit:</p>'
+				. '<p><a href="http://codex.wordpress.org/Create_A_Network" target="_blank">http://codex.wordpress.org/Create_A_Network</a></p>'
 				. '<p><a href="' . wp_get_referer() . '">Back</a></p>';
 		wp_die(__($message, 'my-plugin'));
 	}
@@ -242,6 +243,25 @@ function jcml_parse_post_url( $url, $post_type = 'page' ){
 	}
 
 	return $results;
+}
+
+
+function set_lang_post_types($data){
+	switch_to_blog(BLOG_ID_CURRENT_SITE);
+	if(delete_option('jcml_lang_posttypes') && add_option('jcml_lang_posttypes',$data)){
+		restore_current_blog();
+		return true;
+	}else{
+		restore_current_blog();
+		return false;
+	}
+}
+
+function get_lang_post_types(){
+	switch_to_blog(BLOG_ID_CURRENT_SITE);
+	$data = get_option('jcml_lang_posttypes');
+	restore_current_blog();
+	return $data;
 }
 
 /**

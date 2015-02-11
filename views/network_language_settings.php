@@ -2,6 +2,7 @@
 <div class="wrap" id="page_wrap">
     <h2>Language settings</h2>
     <p>You can control language mapping for your sites here.</p>
+	<p>You can also control which post types can be translated on the <a href="sites.php?page=jcml-lang-posttypes">settings page</a></p>
     <div class="errors_and_messages">
 		<?php if( !empty($errors) ) : ?>
 			<div class="error below-h2" id="error"><p><?php echo implode('<br/>', $errors); ?></p></div>
@@ -40,7 +41,7 @@
 					<?php endif; ?>
 				</tbody>
 			</table>
-			<div style="margin: 5px;">
+			<div style="margin-top: 5px;">
 				<input type="submit" value="Add New Language" class="button button-primary" id="jcml_new_lang_button">
 			</div>
 		</div>

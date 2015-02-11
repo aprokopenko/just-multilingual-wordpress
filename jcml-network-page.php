@@ -5,7 +5,7 @@
  */
 
 function jcml_network_menu(){
-	add_submenu_page('sites.php', 'Language mapping', 'Languages', 'manage_sites', 'jcml-lang-settings', 'jcml_network_language_settings');
+	add_submenu_page('sites.php', 'Language mapping', 'Site Languages', 'manage_sites', 'jcml-lang-settings', 'jcml_network_language_settings');
 	add_submenu_page( 'sites.php', 'Language mapping', 'Post Types', 'manage_sites', 'jcml-lang-posttypes', 'jcml_network_language_posttypes' );	
 
 }
@@ -21,33 +21,40 @@ function jcml_network_language_posttypes(){
 	$errors = $messages = [];
 
 	// get current settings
-	$post_types = get_post_types();
+	$post_types_raw = get_post_types();
 	$post_types_objects = array();
-	
-	foreach($post_types as $key => $val){
+	$post_types = array();
+	foreach($post_types_raw as $key => $val){
 		$obj = get_post_type_object($key);
-		$post_types[$key] = array('label' => $obj->labels->name,'checked' => 0);
-		
+		if($obj->public && $obj->name != 'attachment')
+			$post_types[$key] = array('label' => $obj->labels->name,'checked' => 0);
+
 	}
+	$data = array();
 	//if form submitted
 	if( !empty($_POST['posttype']) ){
+
 		
 		foreach($post_types as $name => $arr){
 			if(isset($_POST['posttype'][$name]))
-				add_option('jcml_lang_posttype_'.$name,1);
-			else
-				delete_option('jcml_lang_posttype_' .$name);
+				$data['jcml_lang_posttype_'.$name] = 1;
 		}
+		
+		set_lang_post_types($data);
 		
 	}
 	$set_types = array();
+	$data = get_lang_post_types();
 	
-	foreach($post_types as $key => $val){
-		$set_type = get_option('jcml_lang_posttype_'.$key);
-		
-		if($set_type)
+	if(!empty($data)){
+		foreach($data as $key => $val){
+			$key = explode('_',$key);
+			$key = array_reverse($key);
+			$key = $key[0];
 			$post_types[$key]['checked'] = 1;
+		}
 	}
+	
 	
 	
 	

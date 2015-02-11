@@ -3,12 +3,13 @@
 /* @var $wpdb wpdb */
 
 function jcml_post_add_meta_boxes(){
+	global $wpdb;
 	$post_type = get_post_type();
-
+	$data = get_lang_post_types();
 	// first check the language mapping
-	if( !jcml_is_blog_mapped() || !get_option('jcml_lang_posttype_' . $post_type) )
+	if( !jcml_is_blog_mapped() || !$data['jcml_lang_posttype_'.$post_type])
 		return;
-
+	
 	$all_post_types = get_post_types();
 
 	// get all registered post types
@@ -16,10 +17,11 @@ function jcml_post_add_meta_boxes(){
 
 	foreach( $screens as $screen )
 	{
-
-		add_meta_box(
-				'jcml_translate_box', 'Translations', 'jcml_post_translate_meta_box', $screen, 'side', 'high'
-		);
+		if($data['jcml_lang_posttype_'.$screen]){
+			add_meta_box(
+					'jcml_translate_box', 'Translations', 'jcml_post_translate_meta_box', $screen, 'side', 'high'
+			);
+		}
 	}
 }
 
@@ -63,11 +65,12 @@ function jcml_post_translate_meta_box( $post ){
 	$language_options = jcml_get_language_options($blog_id);
 	$languages = jcml_get_languages($blog_id);
 	$translations = jcml_get_post_translate_chain($post->ID, null, true);
-
 	$translate_of = array('blog_id' => '', 'post_id' => '');
 	if( !empty($_GET['translate_of']) )
 	{
+		
 		$parts = explode(':', trim($_GET['translate_of']));
+		
 		if( count($parts) == 2 )
 		{
 			if( $translate_of_post = jcml_get_post($parts[1], $parts[0]) )

@@ -51,7 +51,7 @@ $maped_languages = array();
 	<div class="clear"></div>
 </div>
 
-<div id="jcml_set_relation_wrap" class="hide-if-js">
+<div id="jcml_set_relation_wrap" class="hide-if-js togglable-boxes">
 	<div class="wp-tab-panel">
 		<p>Please choose language and correct post.</p>
 		<select id="jcml_set_rel_language" class="full-width" name="jcml_translate_of[blog_id]">
@@ -76,7 +76,7 @@ $maped_languages = array();
 	</div>
 </div>
 
-<div id="jcml_translate_wrap" class="hide-if-js">
+<div id="jcml_translate_wrap" class="hide-if-js togglable-boxes">
 	<div class="wp-tab-panel">
 		
 		<p>Please choose language you want to add.<br/>

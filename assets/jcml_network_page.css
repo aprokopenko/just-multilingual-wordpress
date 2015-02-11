@@ -16,7 +16,7 @@ span.delete{
 
 #langs-table{
 	float: left;
-	width:40%;
+	width:63%;
 }
 
 #jcml-add-form-holder{
@@ -51,11 +51,13 @@ span.delete{
 	width: 100px
 }
 
-.multilang-table-header .table-header-path{
-	width: 200px
-}
+
 
 .multilang-table-header .table-header-alias{
+	width: 150px
+}
+
+.multilang-table-header .table-header-actions{
 	width: 150px
 }
 
