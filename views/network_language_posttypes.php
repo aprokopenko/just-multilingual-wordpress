@@ -1,6 +1,6 @@
 
 <div class="wrap">
-	<h2>Post types</h2>
+	<h2>Just Multilingual Settings</h2>
 	<p>Here you can choose which post types should be translatable.</p>
 
 
