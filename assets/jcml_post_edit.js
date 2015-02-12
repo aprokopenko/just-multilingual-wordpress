@@ -96,7 +96,7 @@ jQuery(document).ready(function(){
 				}
 				else if(response.status == 'ok'){
 					jcml_render_available_translations(response.translations);
-					
+					jcml_rebuild_forms(response.translations);
 					jQuery('#jcml_set_rel_language').val('');
 					jQuery('#jcml_set_rel_post_search').val('').hide();
 					jQuery('#jcml_set_rel_post_id').val('');
@@ -138,6 +138,18 @@ jQuery(document).ready(function(){
 	
 });
 
+
+function jcml_rebuild_forms(translation_info){
+	var chain = translation_info.chain;
+	
+	for(var i=0; i < chain.length; i++){
+		var trans = chain[i];
+		var lang = trans.alias;
+		jQuery('#lang_option_'+trans.blog_id).remove();
+		jQuery('#translate_to_'+trans.blog_id).remove();
+		alert(trans.blog_id);
+	}
+}
 function jcml_render_available_translations( translation_info ){
 	var chain = translation_info.chain;
 	

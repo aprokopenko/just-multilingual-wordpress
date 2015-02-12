@@ -89,7 +89,7 @@ $maped_languages = array();
 				$link.= $lang->domain . $lang->path;
 				$link.= 'wp-admin/post-new.php?post_type=' . $post->post_type . '&translate_of=' . $blog_id . ':' . $post->ID;
 		?>
-			<strong>to <a href="<?php echo esc_attr($link); ?>" target="_blank"><?php echo esc_html($lang->alias); ?></a></strong><br/>
+			<strong id="translate_to_<?php echo $lang->blog_id; ?>">to <a href="<?php echo esc_attr($link); ?>" target="_blank"><?php echo esc_html($lang->alias); ?></a></strong><br/>
 		<?php endforeach; ?>
 			
 		<?php if( empty($missing_translations) ) : ?>

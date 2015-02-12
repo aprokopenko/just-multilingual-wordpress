@@ -178,7 +178,7 @@ function jcml_html_options( $values, $selected = null ){
 	$html = '';
 	foreach( $values as $val => $label )
 	{
-		$html .= '<option value="' . esc_attr($val) . '" ' . selected($val, $selected, false) . '>' . esc_html(ucfirst($label)) . '</option>' . "\n";
+		$html .= '<option id="lang_option_' . esc_attr($val) . '" value="' . esc_attr($val) . '" ' . selected($val, $selected, false) . '>' . esc_html(ucfirst($label)) . '</option>' . "\n";
 	}
 	return $html;
 }
